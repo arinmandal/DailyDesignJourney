@@ -1,0 +1,54 @@
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
+}
+html {
+  font-size: 16px;
+}
+
+body {
+  height: 100vh;
+  width: 100vw;
+  min-height: 100%;
+}
+
+/* Main Container Styles */
+.main {
+  padding: 2rem;
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Heading Styles */
+h1 {
+  font-size: 3rem;
+  padding-bottom: 0.5rem;
+  text-decoration: underline;
+  text-underline-offset: 0.25rem;
+  text-decoration-color: red;
+}
+
+/* Paragraph Styles */
+p {
+  width: 60%;
+  line-height: 1.5rem;
+  margin-bottom: 1rem;
+}
+
+/* List Styles */
+.lists {
+  font-size: 0.75rem;
+}
+
+ul {
+  list-style: none;
+  padding-left: 20px;
+}
+
+li {
+  padding: 1em;
+}
