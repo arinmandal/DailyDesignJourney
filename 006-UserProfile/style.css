@@ -1,0 +1,50 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
+}
+html,
+body {
+  height: 100%;
+  width: 100%;
+}
+html {
+  font-size: 16px;
+}
+
+body {
+  font-family: Arial, Helvetica, sans-serif;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+}
+.profile-card {
+  max-width: 350px;
+  box-shadow: rgba(0, 0, 0, 0.24) 0px 3px 8px;
+  border-radius: 3%;
+  padding: 25px;
+  text-align: center;
+}
+
+.profile-card--image {
+  width: 100px;
+  text-align: center;
+  border-radius: 50%;
+  border: 1px solid black;
+}
+
+
+.profile-card--heading {
+  text-align: center;
+}
+
+hr{
+  margin: 8px 0px;
+}
+.profile-card-content {
+  display: flex;
+  gap: 7px;
+  margin: 5px 0px;
+}
