@@ -1,0 +1,172 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Inter", sans-serif;
+}
+html,
+body {
+  height: 100%;
+  width: 100%;
+}
+html {
+  font-size: 16px;
+}
+body {
+  background-color: #030303;
+  color: white;
+}
+.container {
+  display: flex;
+  height: 100vh;
+}
+
+/* Sidebar */
+.sidebar {
+  width: 240px;
+  background-color: #030303;
+  padding: 20px;
+  border-right: 1px solid #282828;
+}
+
+.logo {
+  display: flex;
+  align-items: center;
+  gap: 2px;
+  margin-bottom: 24px;
+  font-size: 30px;
+  font-weight: 700;
+}
+
+.logo img {
+  height: 30px;
+}
+
+.nav-item {
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  border-radius: 8px;
+  cursor: pointer;
+  margin-bottom: 8px;
+}
+
+.nav-item:hover {
+  background-color: #282828;
+}
+
+/* Main Content */
+.main-content {
+  flex: 1;
+  padding: 20px;
+  overflow-y: auto;
+}
+
+.search-bar {
+  background-color: #121212;
+  border-radius: 8px;
+  padding: 12px 20px;
+  margin-bottom: 24px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.search-bar input {
+  background: none;
+  border: none;
+  color: black;
+  width: 100%;
+  outline: none;
+}
+
+.mood-tags {
+  display: flex;
+  gap: 12px;
+  margin-bottom: 24px;
+  flex-wrap: wrap;
+}
+
+.mood-tag {
+  background-color: #282828;
+  color: #ffffff;
+  padding: 8px 16px;
+  border-radius: 16px;
+  cursor: pointer;
+}
+
+.mood-tag:hover {
+  background-color: #383838;
+}
+
+/* Music Grid */
+.section-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 20px;
+}
+
+.music-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 20px;
+}
+
+.music-card {
+  background-color: #181818;
+  padding: 16px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.music-card:hover {
+  background-color: #282828;
+}
+
+.music-card img {
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 4px;
+  margin-bottom: 12px;
+}
+
+/* Player Bar */
+.player-bar {
+  position: fixed;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  height: 72px;
+  background-color: #181818;
+  border-top: 1px solid #282828;
+  display: flex;
+  align-items: center;
+  padding: 0 20px;
+  justify-content: space-between;
+}
+
+.player-controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 30px;
+  margin: 0 10px;
+}
+
+.progress-bar {
+  flex: 1;
+  height: 4px;
+  background-color: #282828;
+  border-radius: 2px;
+  position: relative;
+}
+
+.progress {
+  position: absolute;
+  height: 100%;
+  background-color: #ff0000;
+  border-radius: 2px;
+  width: 30%;
+}
