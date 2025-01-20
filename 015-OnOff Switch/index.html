@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <title>015~ On/Off Switch</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="toggle-container">
+      <div id="toggle" class="toggle-switch"></div>
+      <div id="status">OFF</div>
+    </div>
+
+    <script>
+      const toggle = document.getElementById("toggle");
+      const status = document.getElementById("status");
+      let isActive = false;
+
+      toggle.addEventListener("click", () => {
+        isActive = !isActive;
+        toggle.classList.toggle("active");
+        status.textContent = isActive ? "ON" : "OFF";
+      });
+    </script>
+  </body>
+</html>
