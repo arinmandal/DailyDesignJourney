@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>017-Purchase Receipt</title>
+    <style>
+      body {
+        font-family: Arial, sans-serif;
+        background-color: #f4f4f4;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        height: 100vh;
+        margin: 0;
+      }
+
+      .container {
+        background-color: white;
+        width: 550px;
+        padding: 30px;
+        border-radius: 10px;
+        box-shadow: 0 0 20px rgba(0, 0, 0, 0.1);
+        text-align: center;
+      }
+
+      .success-icon {
+        font-size: 50px;
+        color: #4caf50;
+        margin-bottom: 20px;
+      }
+
+      .plan-info {
+        margin-bottom: 20px;
+      }
+
+      .plan-info h2 {
+        margin: 0;
+      }
+
+      .plan-info p {
+        margin: 5px 0;
+        color: #666;
+      }
+
+      .payment-details {
+        text-align: left;
+        font-size: 14px;
+        color: #666;
+        margin-bottom: 20px;
+      }
+
+      .payment-details p {
+        margin: 5px 0;
+      }
+
+      .download-button,
+      .back-button {
+        width: 100%;
+        background-color: #4caf50;
+        color: white;
+        border: none;
+        padding: 12px 20px;
+        text-align: center;
+        text-decoration: none;
+        font-size: 16px;
+        border-radius: 5px;
+        cursor: pointer;
+        margin-bottom: 10px;
+      }
+
+      .back-button {
+        background-color: #f4f4f4;
+        color: #333;
+      }
+      #container_button p {
+        margin: 20px 0px;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <div class="success-icon">✓</div>
+      <div class="plan-info">
+        <h2>Adobe Yearly Pro</h2>
+        <p>Discount: -$ 29.99</p>
+        <p>Total: $100.00</p>
+      </div>
+      <div class="payment-details">
+        <p>Date: 01:24 AM Jul. 4, 2024</p>
+        <p>Payment Method: **** 4242</p>
+        <p>Payment Reference: 323492009348282</p>
+      </div>
+      <div id="container_button">
+        <p>Thank you for your payment. Your subscription is now active.</p>
+        <a href="#" class="download-button">Download Receipt</a>
+        <a href="#" class="back-button">Back to Dashboard</a>
+      </div>
+    </div>
+  </body>
+</html>
