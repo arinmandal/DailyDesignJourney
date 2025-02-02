@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <title>028-Contact Page</title>
+  </head>
+  <body class="bg=gray-100 flex items-center justify-center h-screen">
+    <div class="bg-[#0D9488] w-4xl h-[600px] p-6 rounded-lg shadow-lg flex justufy-around gap-4">
+      <div class="w-[50%]">
+        <iframe
+          src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d264350.1374501299!2d-0.4312443426909277!3d51.528607012569104!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x47d8a00baf21de75%3A0x52963a5addd52a99!2sLondon%2C%20UK!5e1!3m2!1sen!2sin!4v1738518312074!5m2!1sen!2sin"
+          width="400"
+          height="300"
+          style="border: 50%"
+          class="w-full h-full rounded-lg"
+          allowfullscreen=""
+          loading="lazy"
+          referrerpolicy="no-referrer-when-downgrade"
+        ></iframe>
+      </div>
+      <div class="w-[50%]">
+        <h1 class="text-3xl font-bold mb-2 text-center text-white font-serif">Contact Us</h1>
+        <form action="" class="color-white">
+          <div class="mb-4">
+            <label for="name" class="block text-[#F0FDFA] text-sm font-bold mb-2"
+              >Name</label
+            >
+            <input
+              type="text"
+              name="name"
+              id="name"
+              class="w-full p-2 rounded-lg border-none bg-gray-100 focus:outline-[#0D9488]"
+              placeholder="Enter Your Name"
+            />
+          </div>
+          <div class="mb-4">
+            <label for="email" class="block text-[#F0FDFA] text-sm font-bold mb-2"
+              >Email</label
+            >
+            <input
+              type="email"
+              name="email"
+              id="email"
+              class="w-full p-2 rounded-lg border-none bg-gray-100 focus:outline-[#0D9488]"
+              placeholder="Enter Your Email"
+            />
+          </div>
+          <div class="mb-4">
+            <label for="message" class="block text-[#F0FDFA] text-sm font-bold mb-2"
+              >Message</label
+            >
+            <textarea
+              name="message"
+              id="message"
+              cols="30"
+              rows="10"
+              class="w-full p-2 rounded-lg border-none bg-gray-100 focus:outline-[#0D9488]"
+              placeholder="Your Message"
+            ></textarea>
+          </div>
+          <button
+            type="submit"
+            class="w-full bg-[#14B8A6] py-2 px-4 rounded-lg text-white font-bold hover:cursor-pointer hover:bg-[#0D9475] "
+          >
+            Send Message
+          </button>
+        </form>
+      </div>
+    </div>
+  </body>
+</html>
