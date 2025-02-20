@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>046-Invoice</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <div class="invoice">
+      <div class="header">
+        <h1>Invoice</h1>
+        <p>INV-0001</p>
+      </div>
+
+      <div class="addresses">
+        <div class="address-block">
+          <h2>To</h2>
+          <p>
+            Google<br />
+            Attn: John Smith<br />
+            Pyrmont<br />
+            Australia
+          </p>
+        </div>
+        <div class="address-block">
+          <h2>From</h2>
+          <p>
+            Jellypepper<br />
+            Attn: Hayden Bleasel<br />
+            Surry Hills<br />
+            Australia
+          </p>
+        </div>
+      </div>
+
+      <table>
+        <thead>
+          <tr>
+            <th>Description</th>
+            <th>Days</th>
+            <th>Price</th>
+            <th>Total</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Website Redesign</td>
+            <td>15</td>
+            <td class="amount">$1,500</td>
+            <td class="amount">$22,500</td>
+          </tr>
+          <tr>
+            <td>Logo and Identity</td>
+            <td>10</td>
+            <td class="amount">$1,500</td>
+            <td class="amount">$15,000</td>
+          </tr>
+          <tr>
+            <td>Marketing Collateral</td>
+            <td>5</td>
+            <td class="amount">$1,500</td>
+            <td class="amount">$4,500</td>
+          </tr>
+        </tbody>
+      </table>
+
+      <div class="totals">
+        <div class="total-row">
+          <span>Subtotal</span>
+          <span>$42,000</span>
+        </div>
+        <div class="total-row">
+          <span>GST (10%)</span>
+          <span>$4,200</span>
+        </div>
+        <div class="total-row final">
+          <span>Total</span>
+          <span>$46,200</span>
+        </div>
+      </div>
+
+      <div class="bank-details">
+        <h2>Bank Details</h2>
+        <p>Bank Name: Macquarie Bank</p>
+        <p>BIC/SWIFT Code: MACQAU2S</p>
+        <p>Account Holder: Jellypepper</p>
+        <p>Account Number: 123456789</p>
+      </div>
+    </div>
+  </body>
+</html>
