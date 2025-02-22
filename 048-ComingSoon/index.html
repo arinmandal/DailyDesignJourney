@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>048-Coming Soon</title>
+    <link
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css"
+      rel="stylesheet"
+    />
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
+    <div class="container">
+      <h1 class="title">
+        BRAND NEW SITE <span style="color: #f59e0b">COMING SOON!</span>
+      </h1>
+      <p class="subtitle">
+        Thank you so much for visiting. We are launching the new site very soon.
+        Please come back later or enter your email below to get the
+        notification.
+      </p>
+
+      <div class="countdown">
+        <div class="countdown-item">
+          <div id="days">00</div>
+          <div class="countdown-label">Days</div>
+        </div>
+        <div class="countdown-item">
+          <div id="hours">00</div>
+          <div class="countdown-label">Hours</div>
+        </div>
+        <div class="countdown-item">
+          <div id="minutes">00</div>
+          <div class="countdown-label">Minutes</div>
+        </div>
+        <div class="countdown-item">
+          <div id="seconds">00</div>
+          <div class="countdown-label">Seconds</div>
+        </div>
+      </div>
+
+      <form class="notify-form" id="notifyForm">
+        <input
+          type="email"
+          class="email-input"
+          placeholder="Email Here"
+          required
+        />
+        <button type="submit" class="notify-btn">
+          NOTIFY ME
+          <i class="fas fa-bell" style="margin-left: 8px"></i>
+        </button>
+      </form>
+
+      <div class="social-links">
+        <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+        <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+        <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+      </div>
+    </div>
+
+    <script>
+      // Set the launch date (1 day from now)
+      const launchDate = new Date().getTime() + 24 * 60 * 60 * 1000;
+
+      function updateCountdown() {
+        const now = new Date().getTime();
+        const distance = launchDate - now;
+
+        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+        const hours = Math.floor(
+          (distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60),
+        );
+        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+
+        document.getElementById("days").innerHTML = String(days).padStart(
+          2,
+          "0",
+        );
+        document.getElementById("hours").innerHTML = String(hours).padStart(
+          2,
+          "0",
+        );
+        document.getElementById("minutes").innerHTML = String(minutes).padStart(
+          2,
+          "0",
+        );
+        document.getElementById("seconds").innerHTML = String(seconds).padStart(
+          2,
+          "0",
+        );
+      }
+
+      // Update countdown every second
+      setInterval(updateCountdown, 1000);
+      updateCountdown(); // Initial call
+
+      // Handle form submission
+      document
+        .getElementById("notifyForm")
+        .addEventListener("submit", function (e) {
+          e.preventDefault();
+          const email = this.querySelector('input[type="email"]').value;
+          alert(`Thank you! We'll notify ${email} when we launch.`);
+          this.reset();
+        });
+    </script>
+  </body>
+</html>
