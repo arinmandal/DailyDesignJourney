@@ -1,0 +1,62 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family:'Inter', sans-serif;
+}
+html , body{
+    height: 100%;
+    width: 100%;
+    background-color: gray;
+}
+html {
+ font-size: 16px;
+}
+
+.notification-panel{
+position: absolute;
+top: 50%;
+left: 50%;
+transform: translate(-50%,-50%);
+width: 650px;
+margin: 0 auto;
+padding: 20px;
+border-radius: 10px;
+box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+background-color: #f9f9f9;
+}
+
+.notification{
+    display: flex;
+    align-items: center;
+    gap: 15px;
+    margin-bottom: 10px;
+    padding: 15px;
+    border-radius: 8px;
+    background-color: white;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+}
+.notification img{
+    width: 60px;
+    height: 60px;
+    object-fit: cover;
+    border-radius: 50%;
+}
+.notification--content h2 {
+  font-size: 1.3rem;
+  font-weight: 500;
+  color: #333;
+}
+.notification--content p{
+    font-size: 1rem;
+    font-weight: 400;
+    color: #666;
+}
+
+.bell-icon {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 15px;
+    display: block;
+    margin: 0 auto;
+}
