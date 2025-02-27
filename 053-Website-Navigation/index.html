@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Responsive Nav</title>
+    <link rel="stylesheet" href="style.css" />
+  </head>
+  <body>
+    <header>
+      <div class="logo">
+        <h2>Vulpo</h2>
+      </div>
+
+      <div class="menu-toggle" id="menu-toggle">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
+      <nav id="nav">
+        <ul>
+          <li>
+            Feature <span><img src="./assets/down-arrow.png" alt="" /></span>
+          </li>
+          <li>
+            Use Cases <span><img src="./assets/down-arrow.png" alt="" /></span>
+          </li>
+          <li>Prices</li>
+          <li>Customers</li>
+          <li>About Us</li>
+        </ul>
+
+        <div class="nav-cta">
+          <button class="nav-cta__login">Log In</button>
+          <button class="nav-cta__started">Get Started</button>
+        </div>
+      </nav>
+    </header>
+
+    <script>
+      const menuToggle = document.getElementById("menu-toggle");
+      const nav = document.getElementById("nav");
+
+      menuToggle.addEventListener("click", () => {
+        nav.classList.toggle("active");
+      });
+    </script>
+  </body>
+</html>
