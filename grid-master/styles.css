@@ -1,0 +1,45 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
+}
+html,
+body {
+  background-color: #ffeead;
+  margin: 10px;
+}
+
+.container > div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-weight: 500;
+  color: white;
+}
+
+.container > div:nth-child(1n) {
+  background-color: #96ceb4;
+}
+
+.container > div:nth-child(3n) {
+  background-color: #88d8b0;
+}
+
+.container > div:nth-child(2n) {
+  background-color: #ff6f69;
+}
+
+.container > div:nth-child(4n) {
+  background-color: #ffcc5c;
+}
+
+.container {
+  display: grid;
+  /* Specifies the size of the columns, and how many columns in a grid layout */
+  grid-template-columns: 100px auto 100px;
+
+  /* Specifies the size of the rows in a grid layout */
+  grid-template-rows: 50px 50px 50px;
+  grid-gap: 3px;
+}
