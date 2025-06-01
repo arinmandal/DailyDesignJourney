@@ -1,9 +1,18 @@
 .container {
   border: 5px solid #ffcc5e;
   display: flex;
-  flex-wrap: wrap;
 }
 
-.container > div {
-  width: 300px;
+.home {
+  flex: 1 1 200px;
+  /* flex-grow: 1;
+  flex-shrink: 1;
+  flex-basis: 200px; */
+}
+
+.logout {
+  flex: 1 10 200px;
+  /* flex-grow: 10;
+  flex-shrink: 1;
+  flex-basis: 200px; */
 }
