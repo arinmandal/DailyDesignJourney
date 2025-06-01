@@ -4,15 +4,13 @@
 }
 
 .home {
-  flex: 1 1 200px;
-  /* flex-grow: 1;
-  flex-shrink: 1;
-  flex-basis: 200px; */
+order: 1;
 }
 
 .logout {
-  flex: 1 10 200px;
-  /* flex-grow: 10;
-  flex-shrink: 1;
-  flex-basis: 200px; */
+order: -1;
+}
+
+.search{
+order: 0;
 }
