@@ -1,13 +1,14 @@
 .container {
   border: 5px solid #ffcc5e;
   display: flex;
+  height: 100%;
+  align-items: center;
 }
-
 
 .logout{
-  flex: 1;
-}
-.home{
-  flex: 1;
+  align-self: flex-start;
 }
 
+.home{
+  align-self: flex-end;
+}
