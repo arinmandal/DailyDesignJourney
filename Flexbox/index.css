@@ -1,14 +1,9 @@
 .container {
   border: 5px solid #ffcc5e;
   display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  align-items: flex-end;
   height: 100%;
-  align-items: center;
 }
 
-.logout{
-  align-self: flex-start;
-}
-
-.home{
-  align-self: flex-end;
-}
