@@ -1,9 +1,13 @@
 .container {
   border: 5px solid #ffcc5e;
   display: flex;
-  justify-content: flex-end;
 }
 
-.home {
-  margin-right: auto;
+
+.logout{
+  flex: 1;
 }
+.home{
+  flex: 1;
+}
+
