@@ -1,0 +1,123 @@
+@import url("https://fonts.googleapis.com/css2?family=Radio+Canada:ital,wght@0,300..700;1,300..700&display=swap");
+
+input,
+button,
+select,
+textarea {
+  font: inherit;
+}
+
+form {
+  display: grid;
+  gap: 1rem;
+
+  @media (width > 720px) {
+    grid-template-columns: 1fr 1fr;
+  }
+}
+
+.form-group {
+  display: grid;
+  gap: 0.5cap;
+}
+
+input {
+  background: var(--surface-2);
+  color: var(--text-1);
+  border: var(--border);
+  border-radius: 16px;
+  padding: 1ex 2ex;
+
+  /* width: 100%; */
+  accent-color: var(--accent);
+}
+
+input:not([type="checkbox"]) {
+  width: 100%;
+}
+
+.form-group:has(.fine-print) {
+  grid-column: 1 / -1;
+
+  display: flex;
+  gap: 1ch;
+}
+
+.contact-form button {
+  justify-self: start;
+}
+/* general styling */
+:root {
+  --surface-0: hsl(229, 41%, 5%);
+  --surface-1: hsl(229, 25%, 12%);
+  --surface-2: hsl(234, 26%, 16%);
+  --text-1: hsl(229, 12%, 100%);
+  --text-2: hsl(229, 12%, 66%);
+  --required: hsl(321, 32%, 56%);
+  --accent: hsl(262, 84%, 52%);
+  --border: 1px solid hsl(229, 22%, 19%);
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+}
+
+body {
+  font-family: "Radio Canada", sans-serif;
+  font-size: 1.125rem;
+  line-height: 1.6;
+
+  background-color: var(--surface-0);
+  color: var(--text-1);
+
+  padding-block-start: 10vb;
+}
+
+h1 {
+  font-size: 4rem;
+  font-weight: 300;
+  line-height: 1;
+}
+
+a {
+  color: hsl(from var(--accent) h s 80%);
+}
+
+label {
+  text-transform: uppercase;
+  font-size: 1rem;
+
+  text-box-trim: trim-both;
+  text-box-edge: cap alphabetic;
+}
+
+.fine-print {
+  text-transform: revert;
+  line-height: 1.4;
+}
+
+.contact-form {
+  display: grid;
+  gap: 1rem;
+
+  background-color: var(--surface-1);
+  padding: 3rem;
+  border-radius: 24px;
+  width: min(100% - 4rem, 1200px);
+  margin-inline: auto;
+}
+
+button {
+  cursor: pointer;
+  background-color: var(--accent);
+  color: var(--text-1);
+  padding: 1em 1.5em;
+  border: 0;
+  border-radius: 16px;
+
+  &:hover,
+  &:focus-visible {
+    background-color: hsl(from var(--accent) h s 30%);
+  }
+}
