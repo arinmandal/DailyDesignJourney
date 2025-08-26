@@ -1,0 +1,29 @@
+.container {
+	width: 80%;
+	padding: 1em;
+	margin: 0 auto;
+	min-width: 400px;
+	/* background-color: red; */
+}
+
+.hide {
+	display: none;
+}
+
+.search-bar {
+	width: 115px;
+	padding: 10px;
+	border: 1px solid #ccc;
+	border-radius: 5px;
+	transition: width 0.4s ease;
+}
+
+.search-bar:focus {
+	width: 100%;
+	outline: none;
+	border-color: #007bff;
+}
+
+input:focus::-webkit-input-placeholder {
+	color: transparent;
+}
