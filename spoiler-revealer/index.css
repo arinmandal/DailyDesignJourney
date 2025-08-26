@@ -1,0 +1,28 @@
+:root {
+	--spolier-color: #000;
+}
+
+p {
+	line-height: 1.5em;
+}
+
+.post {
+	margin-block: 10px;
+	font-family: sans-serif;
+	background: #e8eaed;
+	padding: 1em;
+	border-radius: 1em;
+	margin-bottom: 1em;
+}
+
+.spoiler {
+	background-color: var(--spolier-color);
+	color: var(--spolier-color);
+  transition: all .5s ease-in;
+}
+
+
+.spoiler:hover{
+  background-color: initial;
+  color: initial;
+}
