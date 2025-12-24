@@ -16,7 +16,7 @@ Design A Digital Flight ticket responsive design using **Figma**.
 
 ### Mobile
 
-![Phone](./iphone_14_&_15_Pro_Max_1.png)
+![Phone](./Phone.png)
 
 ### Desktop
 
