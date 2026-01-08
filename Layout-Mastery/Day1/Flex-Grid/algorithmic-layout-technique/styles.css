@@ -1,0 +1,107 @@
+/* *{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+html , body{
+    height: 100%;
+    width: 100%;
+}
+html {
+    scroll-behavior: smooth;
+}
+header{
+  width: 100%;
+  min-height: 60px;
+  background-color: seagreen;
+  color: white;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+}
+h1{
+  margin:0 auto;
+}
+.links {
+  display: flex;
+  justify-content: center;
+  text-align: center;
+  gap: 5px;
+  margin:0 auto;
+} */
+
+
+:root {
+  /* ↓ Use these variables to customise the albatross. */
+  /* --centerflex-gap: 3rem; */
+  /* --centerflex-threshold: 45rem; */
+}
+
+.centerflex {
+  /* ↓ Save the large negative or large positive value to a variable */
+  --multiplier: calc((var(--centerflex-threshold, 38rem) - 100%) * 666);
+  
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  /* ↓ Multiply by -1 to make negative */
+  margin: calc(var(--centerflex-gap, 1rem) / 2 * -1) 0;
+
+  &:before {
+    content: "";
+    flex-grow: 666;
+    margin: 0;
+    /* ↓ If --multiplier is negative, use 0px instead */
+    flex-basis: Max(0px, var(--multiplier));
+  }
+
+  > * {
+    /* ↓ Half the value to each element, combining to make the whole */
+    margin: calc(var(--centerflex-gap, 1rem) / 2) auto;
+
+    &:first-child {
+      order: -1;
+    }
+  }
+  
+}
+
+/* Additional CSS Stuff. Not needed for the albatross */
+
+*, *:before, *:after {
+  box-sizing: border-box;
+}
+
+body {
+  padding: 1em;
+  background: linear-gradient(-135deg, #005, #001);
+  min-height: 100vh;
+  color: #fff;
+}
+
+.logo svg {
+  display: block;
+  max-width: 100%;
+}
+
+ul {
+  list-style: none;
+  padding: 0;
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin: -0.5em;
+}
+
+li {
+  margin: 0.5em;
+}
+
+
+a, a:visited, a:hover, a:active {
+  color: inherit; /* Adopts the color of the parent element */
+  text-decoration: none; /* Removes the default underline */
+}
