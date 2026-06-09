@@ -1,0 +1,64 @@
+*{
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: 'Inter', sans-serif;
+}
+html , body{
+    height: 100%;
+    width: 100%;
+}
+
+body {
+  display: grid;
+  place-content: center;
+  background-color: gainsboro;
+}
+
+.card{
+  position: relative;
+  max-width: 350px;
+  height: 300px;
+  background-color: white;
+  padding: 10px 20px;
+  border-radius:10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-evenly;
+  align-items: flex-start;
+}
+
+.card__cover{
+  top: -30px;
+  left: 25px;
+  position: absolute;
+  width: 300px;
+  height: 100px;
+  background-color: skyblue;
+  border-radius: 10px;
+}
+
+.card__heading {
+  margin-top: 3rem;
+  padding: 1.5rem 0;
+}
+
+.card__desc {
+font-size: small;
+letter-spacing: 0.08em;
+}
+
+.card__btn {
+  margin-top: 7px;
+  padding: 0.50rem;
+  background-color: skyblue;
+  color: white;
+  font-weight: 600;
+  border-style: none;
+  border-radius: 7px;
+  cursor: pointer;
+}
+
+.card__btn:hover {
+background-color: rgb(150, 195, 212);
+}
