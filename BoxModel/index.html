@@ -1,0 +1,100 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>BOX MODEL EXPLORATION</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+    <h1>Understanding CSS Box Model</h1>
+    
+    <div class="box-1">
+      <p>Box 1 - Purple Background</p>
+      <p>Padding: 20px</p>
+      <p>Border: 1px solid red</p>
+      <p>Margin: 50px</p>
+    </div>
+    
+    <div class="box-2">
+      <p>Box 2 - Sky Blue Background</p>
+      <p>Padding: 20px</p>
+      <p>Border: 3px solid gray</p>
+      <p>Margin: 30px</p>
+    </div>
+
+    <div class="variable">
+      <h3>Using CSS Variables</h3>
+      <p>Background color defined with CSS variable: --red</p>
+      <p>Text color defined with CSS variable: --white</p>
+    </div>
+
+    <div class="box-model-explanation">
+      <h2>What is the CSS Box Model?</h2>
+      <p>The CSS box model is a fundamental concept that describes how all HTML elements are structured. Every element on a web page can be thought of as a rectangular box with four distinct areas:</p>
+      
+      <ul>
+        <li><strong>Content</strong> - The actual content of the element (text, images, etc.)</li>
+        <li><strong>Padding</strong> - The space between the content and the border</li>
+        <li><strong>Border</strong> - The line that surrounds the padding and content</li>
+        <li><strong>Margin</strong> - The space outside the border that separates elements from each other</li>
+      </ul>
+
+      <h3>How Box Sizing Works</h3>
+      <p>By default, CSS uses the <code>content-box</code> model where width and height only apply to the content area. When you add padding and border, the total size increases.</p>
+      
+      <p>In this example, we've set <code>box-sizing: border-box;</code> globally, which means that the width and height include padding and border, making layout calculations much more predictable.</p>
+
+      <div class="box-3">
+        <p>This box demonstrates the border-box model</p>
+        <p>Width: 200px (includes padding and border)</p>
+        <p>Padding: 15px</p>
+        <p>Border: 2px solid black</p>
+      </div>
+
+      <h3>Visualizing Box Model Components</h3>
+      <p>Each element has these measurable properties:</p>
+      
+      <table class="box-model-table">
+        <tr>
+          <th>Property</th>
+          <th>Description</th>
+          <th>Example Value</th>
+        </tr>
+        <tr>
+          <td>Width</td>
+          <td>Horizontal dimension of the content area</td>
+          <td>200px</td>
+        </tr>
+        <tr>
+          <td>Height</td>
+          <td>Vertical dimension of the content area</td>
+          <td>200px</td>
+        </tr>
+        <tr>
+          <td>Padding</td>
+          <td>Space inside the border</td>
+          <td>20px</td>
+        </tr>
+        <tr>
+          <td>Border</td>
+          <td>Line around the padding and content</td>
+          <td>1px solid red</td>
+        </tr>
+        <tr>
+          <td>Margin</td>
+          <td>Space outside the border</td>
+          <td>50px</td>
+        </tr>
+      </table>
+
+      <p><strong>Total Width Calculation (with border-box):</strong></p>
+      <p>200px (width) + 20px (padding left) + 20px (padding right) + 1px (border left) + 1px (border right) = 242px total width</p>
+
+      <p><strong>Total Height Calculation (with border-box):</strong></p>
+      <p>200px (height) + 20px (padding top) + 20px (padding bottom) + 1px (border top) + 1px (border bottom) = 242px total height</p>
+    </div>
+  </div>
+</body>
+</html>
