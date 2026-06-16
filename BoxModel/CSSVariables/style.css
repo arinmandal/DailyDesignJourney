@@ -1,0 +1,43 @@
+* {
+	margin: 0;
+	padding: 0;
+	box-sizing: border-box;
+	font-family: "Inter", sans-serif;
+}
+:root {
+	--background-color: #ffffff;
+	--text-color: #000000;
+	--button-background-color: #007bff;
+	--button-text-color: #ffffff;
+}
+
+body {
+    width: 100%;
+    height: 100vh;
+	background-color: var(--background-color);
+	color: var(--text-color);
+	transition: all 0.5s ease-in-out;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.container {
+ display: flex;
+ flex-direction: column;
+ gap: 10px;
+}
+button {
+	padding: 10px 20px;
+	background-color: var(--button-background-color);
+	color: var(--button-text-color);
+	border: none;
+	border-radius: 5px;
+	cursor: pointer;
+}
+
+.dark-theme {
+	--background-color: #333333;
+    --text-color: #ffffff;
+    --button-background-color: #ff4500;
+}

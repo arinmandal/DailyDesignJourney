@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Theme Switcher</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <div class="container">
+  <h1>Welcome to the Theme Switcher!</h1>
+  <p>This is a simple page with a theme switcher.</p>
+  <button id="theme-toggle">Switch to Dark Mode</button>
+</div>
+
+
+<script>
+document.getElementById('theme-toggle').addEventListener('click', ()=>{
+  document.body.classList.toggle('dark-theme')
+})
+</script>
+</body>
+</html>
