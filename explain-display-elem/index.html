@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CSS Display Properties</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <!-- Block Element -->
+    <div class="block-element">Block Element</div>
+
+    <!-- Inline Element -->
+    <span class="inline-element">Inline Element</span>
+    
+    <!-- Inline-Block Element -->
+    <span class="inline-block-element">Inline-Block Element</span>
+
+    <!-- None Display -->
+    <div class="none-element">None Element (hidden)</div>
+
+    <h1>CSS Display Properties</h1>
+    <p>The CSS `display` property is used to specify the layout of an element. It controls whether the element will be displayed as a block, inline, inline-block, or not at all.</p>
+
+    <h2>Block Elements</h2>
+    <pre><code class="block-element">display: block;</code></pre>
+    <p>Block elements take up the full width available and start on a new line. They can have margins and padding applied to both sides, as well as top and bottom.</p>
+    <p><strong>Examples:</strong> `<div>`, `<p>`, `<h1>` to `<h6>`</p>
+
+    <h2>Inline Elements</h2>
+    <pre><code class="inline-element">display: inline;</code></pre>
+    <p>Inline elements only take up as much width as necessary. They do not start on a new line and only apply horizontal margins and padding.</p>
+    <p><strong>Examples:</strong> `<span>`, `<a>`, `<strong>`, `<em>`</p>
+
+    <h2>Inline-Block Elements</h2>
+    <pre><code class="inline-block-element">display: inline-block;</code></pre>
+    <p>Inline-block elements combine properties of both block and inline. They take up as much width as necessary but do not start on a new line. They can have margins and padding applied to both sides, top, and bottom.</p>
+    <p><strong>Examples:</strong> `<img>`, buttons styled with CSS</p>
+
+    <h2>None Display</h2>
+    <pre><code class="none-element">display: none;</code></pre>
+    <p>The `none` display value hides the element from being displayed at all. The space it would occupy is not reserved.</p>
+    <p>This is often used for conditional display or hiding elements that are not relevant under certain conditions.</p>
+
+</body>
+</html>

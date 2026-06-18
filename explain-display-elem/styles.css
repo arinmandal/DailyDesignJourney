@@ -1,0 +1,31 @@
+/* Block Element */
+.block-element {
+    display: block;
+    background-color: lightblue;
+    padding: 10px;
+    margin: 5px;
+    border: 2px solid blue;
+}
+
+/* Inline Element */
+.inline-element {
+    display: inline;
+    background-color: lightgreen;
+    padding: 5px 10px;
+    margin: 2px;
+    border: 1px solid green;
+}
+
+/* Inline-Block Element */
+.inline-block-element {
+    display: inline-block;
+    background-color: lightcoral;
+    padding: 5px 10px;
+    margin: 2px;
+    border: 1px solid red;
+}
+
+/* None Display */
+.none-element {
+    display: none;
+}
