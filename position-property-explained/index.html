@@ -1,0 +1,863 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>CSS Position — Visual Guide</title>
+<style>
+  @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&family=Fira+Code:wght@400;500&display=swap');
+
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --bg: #f6f7fb;
+    --surface: #ffffff;
+    --border: #e3e6ef;
+    --text: #1a1d2e;
+    --muted: #6b7080;
+    --static-bg: #e8eaf6; --static-acc: #3949ab; --static-light: #c5cae9;
+    --rel-bg: #e3f2fd;    --rel-acc: #1565c0;    --rel-light: #bbdefb;
+    --abs-bg: #e8f5e9;    --abs-acc: #2e7d32;    --abs-light: #c8e6c9;
+    --fix-bg: #fff3e0;    --fix-acc: #e65100;    --fix-light: #ffe0b2;
+    --stk-bg: #fce4ec;    --stk-acc: #c62828;    --stk-light: #ffcdd2;
+    --radius: 10px;
+    --font: 'Inter', system-ui, sans-serif;
+    --mono: 'Fira Code', monospace;
+  }
+
+  body {
+    font-family: var(--font);
+    background: var(--bg);
+    color: var(--text);
+    min-height: 100vh;
+  }
+
+  /* ── HEADER ── */
+  header {
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    padding: 28px 40px 24px;
+    display: flex;
+    align-items: flex-end;
+    gap: 20px;
+  }
+  header h1 { font-size: 26px; font-weight: 600; letter-spacing: -0.5px; }
+  header p { font-size: 14px; color: var(--muted); line-height: 1.5; max-width: 460px; }
+
+  /* ── NAV TABS ── */
+  .tabs {
+    display: flex;
+    gap: 0;
+    padding: 0 40px;
+    background: var(--surface);
+    border-bottom: 1px solid var(--border);
+    overflow-x: auto;
+  }
+  .tab {
+    padding: 14px 22px;
+    font-size: 13px;
+    font-weight: 500;
+    font-family: var(--mono);
+    cursor: pointer;
+    border: none;
+    background: none;
+    color: var(--muted);
+    border-bottom: 2px solid transparent;
+    transition: color 0.15s, border-color 0.15s;
+    white-space: nowrap;
+  }
+  .tab:hover { color: var(--text); }
+  .tab.active { color: var(--text); border-bottom-color: var(--accent); }
+  .tab[data-id="static"]   { --accent: var(--static-acc); }
+  .tab[data-id="relative"] { --accent: var(--rel-acc); }
+  .tab[data-id="absolute"] { --accent: var(--abs-acc); }
+  .tab[data-id="fixed"]    { --accent: var(--fix-acc); }
+  .tab[data-id="sticky"]   { --accent: var(--stk-acc); }
+
+  /* ── MAIN LAYOUT ── */
+  main { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; padding: 32px 40px; max-width: 1200px; }
+
+  section { display: flex; flex-direction: column; gap: 16px; }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: var(--radius);
+    overflow: hidden;
+  }
+  .card-head {
+    padding: 14px 18px 12px;
+    border-bottom: 1px solid var(--border);
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+  .card-head h2 { font-size: 13px; font-weight: 600; color: var(--muted); text-transform: uppercase; letter-spacing: 0.06em; }
+  .card-body { padding: 18px; }
+
+  /* ── TYPE BADGE ── */
+  .badge {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 10px;
+    border-radius: 6px;
+    font-family: var(--mono);
+    font-size: 12px;
+    font-weight: 500;
+  }
+  .dot { width: 7px; height: 7px; border-radius: 50%; }
+
+  /* ── DESCRIPTION ── */
+  .desc { font-size: 14px; line-height: 1.7; color: var(--muted); }
+  .desc strong { color: var(--text); font-weight: 500; }
+
+  /* ── PROPERTIES TABLE ── */
+  .props { display: flex; flex-direction: column; gap: 0; }
+  .prop-row {
+    display: flex;
+    gap: 12px;
+    padding: 9px 0;
+    border-bottom: 1px solid var(--border);
+    font-size: 13px;
+    align-items: baseline;
+  }
+  .prop-row:last-child { border-bottom: none; }
+  .prop-key { color: var(--muted); min-width: 130px; font-size: 12px; }
+  .prop-val { color: var(--text); font-family: var(--mono); font-size: 12px; }
+
+  /* ── CODE BLOCK ── */
+  .code {
+    background: #1e2030;
+    border-radius: 8px;
+    padding: 16px;
+    font-family: var(--mono);
+    font-size: 13px;
+    line-height: 1.8;
+    overflow-x: auto;
+  }
+  .c-sel  { color: #82aaff; }
+  .c-prop { color: #89ddff; }
+  .c-val  { color: #c3e88d; }
+  .c-str  { color: #c3e88d; }
+  .c-cmt  { color: #546e7a; }
+  .c-pun  { color: #89ddff; }
+
+  /* ── DEMO AREA ── */
+  .demo-wrap {
+    border-radius: 8px;
+    overflow: hidden;
+    border: 1px solid var(--border);
+  }
+  .demo-toolbar {
+    background: #f0f1f5;
+    padding: 8px 12px;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    border-bottom: 1px solid var(--border);
+  }
+  .tb-dot { width: 10px; height: 10px; border-radius: 50%; }
+  .tb-dot:nth-child(1) { background: #ff5f57; }
+  .tb-dot:nth-child(2) { background: #febc2e; }
+  .tb-dot:nth-child(3) { background: #28c840; }
+  .demo-label { font-size: 11px; color: #888; margin-left: 6px; font-family: var(--mono); }
+
+  .demo-viewport {
+    height: 260px;
+    overflow-y: auto;
+    background: #f8f9fc;
+    position: relative;
+  }
+  .demo-page { padding: 16px; }
+
+  /* ── BOX STYLES ── */
+  .dbox {
+    border-radius: 7px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: var(--mono);
+    font-size: 11px;
+    font-weight: 500;
+    text-align: center;
+    line-height: 1.4;
+    padding: 8px;
+  }
+  .dbox.static-box   { background: var(--static-bg); color: var(--static-acc); border: 1.5px solid var(--static-light); }
+  .dbox.rel-box      { background: var(--rel-bg);    color: var(--rel-acc);    border: 1.5px solid var(--rel-light); }
+  .dbox.abs-box      { background: var(--abs-bg);    color: var(--abs-acc);    border: 1.5px solid var(--abs-light); }
+  .dbox.fix-box      { background: var(--fix-bg);    color: var(--fix-acc);    border: 1.5px solid var(--fix-light); }
+  .dbox.stk-box      { background: var(--stk-bg);    color: var(--stk-acc);    border: 1.5px solid var(--stk-light); }
+  .dbox.ghost        { background: transparent; border: 1.5px dashed #bbb; color: #bbb; }
+  .dbox.filler       { background: #eef0f5; border: 1.5px dashed #d0d3de; color: #aaa; }
+
+  /* ── TIP BOX ── */
+  .tip {
+    display: flex;
+    gap: 10px;
+    padding: 12px 14px;
+    border-radius: 8px;
+    font-size: 13px;
+    line-height: 1.6;
+    border-left: 3px solid;
+  }
+  .tip-icon { font-size: 15px; flex-shrink: 0; margin-top: 1px; }
+
+  /* ── ARROW LEGEND ── */
+  .legend { display: flex; flex-wrap: wrap; gap: 10px; margin-top: 6px; }
+  .leg-item { display: flex; align-items: center; gap: 6px; font-size: 11px; color: var(--muted); }
+  .leg-swatch { width: 14px; height: 14px; border-radius: 3px; }
+
+  /* ── HIDDEN PANEL ── */
+  .panel { display: none; }
+  .panel.active { display: contents; }
+
+  /* ── RESPONSIVE ── */
+  @media (max-width: 800px) {
+    main { grid-template-columns: 1fr; padding: 20px; }
+    header { flex-direction: column; align-items: flex-start; padding: 20px; }
+    .tabs { padding: 0 20px; }
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div>
+    <h1>CSS <code style="font-family:var(--mono);font-size:22px;">position</code> — Visual Guide</h1>
+  </div>
+  <p>Click a tab to explore how each position value controls where an element lives on the page. Every demo is interactive.</p>
+</header>
+
+<nav class="tabs" role="tablist">
+  <button class="tab active" data-id="static"   role="tab">static</button>
+  <button class="tab"        data-id="relative"  role="tab">relative</button>
+  <button class="tab"        data-id="absolute"  role="tab">absolute</button>
+  <button class="tab"        data-id="fixed"     role="tab">fixed</button>
+  <button class="tab"        data-id="sticky"    role="tab">sticky</button>
+</nav>
+
+<main>
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- STATIC                                               -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <div class="panel active" id="panel-static">
+
+    <!-- LEFT: demo -->
+    <section>
+      <div class="card">
+        <div class="card-head">
+          <h2>Live demo</h2>
+          <span class="badge" style="background:var(--static-bg);color:var(--static-acc);">
+            <span class="dot" style="background:var(--static-acc);"></span>position: static
+          </span>
+        </div>
+        <div class="card-body" style="padding:14px;">
+          <div class="demo-wrap">
+            <div class="demo-toolbar">
+              <div class="tb-dot"></div><div class="tb-dot"></div><div class="tb-dot"></div>
+              <span class="demo-label">Normal document flow</span>
+            </div>
+            <div class="demo-viewport">
+              <div class="demo-page" style="display:flex;flex-direction:column;gap:10px;">
+                <div class="dbox filler" style="height:50px;">Element before</div>
+                <div class="dbox static-box" style="height:64px;">
+                  position: static<br>
+                  <span style="font-size:10px;opacity:0.7;">sits in normal flow</span>
+                </div>
+                <div class="dbox filler" style="height:50px;">Element after</div>
+                <div class="dbox filler" style="height:50px;">Element after</div>
+              </div>
+            </div>
+          </div>
+          <div class="tip" style="background:var(--static-bg);border-color:var(--static-acc);margin-top:14px;">
+            <span class="tip-icon">💡</span>
+            <span style="color:var(--static-acc);">Every HTML element is <strong>static by default</strong>. You never need to write it unless you're overriding a previous rule. The top / right / bottom / left properties do nothing here.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><h2>When to use it</h2></div>
+        <div class="card-body">
+          <div class="props">
+            <div class="prop-row"><span class="prop-key">Use when</span><span class="prop-val">You want default flow behavior</span></div>
+            <div class="prop-row"><span class="prop-key">Typical elements</span><span class="prop-val">p, div, h1, span…</span></div>
+            <div class="prop-row"><span class="prop-key">Can use offsets?</span><span class="prop-val" style="color:#c62828;">No — ignored entirely</span></div>
+            <div class="prop-row"><span class="prop-key">Creates stacking context</span><span class="prop-val" style="color:#c62828;">No</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- RIGHT: explanation + code -->
+    <section>
+      <div class="card">
+        <div class="card-head"><h2>How it works</h2></div>
+        <div class="card-body" style="display:flex;flex-direction:column;gap:14px;">
+          <p class="desc">Static is the <strong>natural state</strong> of every element. Elements stack top-to-bottom, left-to-right according to the HTML order. There is no special positioning — the browser places each box right after the previous one.</p>
+          <p class="desc">Think of it like words in a paragraph: each word follows the last with no jumping around.</p>
+          <div style="display:flex;gap:8px;align-items:center;">
+            <div style="flex:1;text-align:center;padding:10px;background:#f0f1f5;border-radius:8px;font-size:12px;font-family:var(--mono);color:var(--muted);">Box 1</div>
+            <span style="color:var(--muted);">→</span>
+            <div style="flex:1;text-align:center;padding:10px;background:var(--static-bg);border-radius:8px;font-size:12px;font-family:var(--mono);color:var(--static-acc);font-weight:500;">static</div>
+            <span style="color:var(--muted);">→</span>
+            <div style="flex:1;text-align:center;padding:10px;background:#f0f1f5;border-radius:8px;font-size:12px;font-family:var(--mono);color:var(--muted);">Box 3</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><h2>CSS code</h2></div>
+        <div class="card-body" style="padding:0;">
+          <div class="code">
+<span class="c-sel">.box</span> <span class="c-pun">{</span><br>
+&nbsp;&nbsp;<span class="c-prop">position</span><span class="c-pun">:</span> <span class="c-val">static</span><span class="c-pun">;</span> <span class="c-cmt">/* default — no need to write */</span><br>
+<br>
+&nbsp;&nbsp;<span class="c-cmt">/* these have NO effect with static: */</span><br>
+&nbsp;&nbsp;<span class="c-prop">top</span><span class="c-pun">:</span> <span class="c-val">20px</span><span class="c-pun">;</span>    <span class="c-cmt">/* ✗ ignored */</span><br>
+&nbsp;&nbsp;<span class="c-prop">left</span><span class="c-pun">:</span> <span class="c-val">50px</span><span class="c-pun">;</span>   <span class="c-cmt">/* ✗ ignored */</span><br>
+&nbsp;&nbsp;<span class="c-prop">z-index</span><span class="c-pun">:</span> <span class="c-val">10</span><span class="c-pun">;</span>  <span class="c-cmt">/* ✗ ignored */</span><br>
+<span class="c-pun">}</span>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div><!-- /panel-static -->
+
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- RELATIVE                                             -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <div class="panel" id="panel-relative">
+
+    <section>
+      <div class="card">
+        <div class="card-head">
+          <h2>Live demo</h2>
+          <span class="badge" style="background:var(--rel-bg);color:var(--rel-acc);">
+            <span class="dot" style="background:var(--rel-acc);"></span>position: relative
+          </span>
+        </div>
+        <div class="card-body" style="padding:14px;">
+          <div class="demo-wrap">
+            <div class="demo-toolbar">
+              <div class="tb-dot"></div><div class="tb-dot"></div><div class="tb-dot"></div>
+              <span class="demo-label">Shifts visually — ghost space stays</span>
+            </div>
+            <div class="demo-viewport">
+              <div class="demo-page" style="display:flex;flex-direction:column;gap:10px;">
+                <div class="dbox filler" style="height:50px;">Element before</div>
+                <div style="position:relative;">
+                  <!-- ghost to show reserved space -->
+                  <div class="dbox ghost" style="height:64px;width:100%;">
+                    <span style="font-size:10px;">reserved space (ghost)</span>
+                  </div>
+                  <!-- actual shifted box -->
+                  <div class="dbox rel-box" style="height:64px;position:absolute;top:20px;left:40px;width:calc(100% - 40px);">
+                    position: relative<br>
+                    <span style="font-size:10px;opacity:0.7;">top:20px · left:40px</span>
+                  </div>
+                </div>
+                <div class="dbox filler" style="height:50px;margin-top:64px;">Element after (doesn't move)</div>
+              </div>
+            </div>
+          </div>
+          <div class="tip" style="background:var(--rel-bg);border-color:var(--rel-acc);margin-top:14px;">
+            <span class="tip-icon">👻</span>
+            <span style="color:var(--rel-acc);">The <strong>ghost space</strong> stays in the flow. Sibling elements don't shift to fill the gap — only the painted position moves.</span>
+          </div>
+        </div>
+      </div>
+
+      <!-- offset controls -->
+      <div class="card">
+        <div class="card-head"><h2>Try it — drag the sliders</h2></div>
+        <div class="card-body">
+          <div style="display:flex;flex-direction:column;gap:12px;">
+            <label style="font-size:13px;color:var(--muted);display:flex;align-items:center;gap:12px;">
+              <span style="min-width:70px;">top: <strong id="top-val" style="color:var(--rel-acc);">0px</strong></span>
+              <input type="range" id="top-slider" min="-40" max="60" value="0" style="flex:1;">
+            </label>
+            <label style="font-size:13px;color:var(--muted);display:flex;align-items:center;gap:12px;">
+              <span style="min-width:70px;">left: <strong id="left-val" style="color:var(--rel-acc);">0px</strong></span>
+              <input type="range" id="left-slider" min="-60" max="100" value="0" style="flex:1;">
+            </label>
+          </div>
+          <div style="margin-top:14px;background:#f8f9fc;border:1px solid var(--border);border-radius:8px;padding:16px;height:100px;position:relative;">
+            <div class="dbox ghost" style="width:100px;height:60px;">ghost</div>
+            <div class="dbox rel-box" id="rel-demo-box" style="width:100px;height:60px;position:absolute;top:20px;left:16px;">
+              relative
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="card">
+        <div class="card-head"><h2>How it works</h2></div>
+        <div class="card-body" style="display:flex;flex-direction:column;gap:14px;">
+          <p class="desc">The element <strong>stays in the normal flow</strong> (its original space is reserved) but visually shifts using <code style="font-family:var(--mono);font-size:12px;">top</code>, <code style="font-family:var(--mono);font-size:12px;">right</code>, <code style="font-family:var(--mono);font-size:12px;">bottom</code>, or <code style="font-family:var(--mono);font-size:12px;">left</code>.</p>
+          <p class="desc">Positive <code style="font-family:var(--mono);font-size:12px;">top</code> pushes the element <em>down</em>. Positive <code style="font-family:var(--mono);font-size:12px;">left</code> pushes it <em>right</em>. The offset is measured from where it would naturally sit.</p>
+          <p class="desc">It also becomes a <strong>positioning anchor</strong> — any absolutely positioned children will be placed relative to this element.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-head"><h2>CSS code</h2></div>
+        <div class="card-body" style="padding:0;">
+          <div class="code">
+<span class="c-sel">.box</span> <span class="c-pun">{</span><br>
+&nbsp;&nbsp;<span class="c-prop">position</span><span class="c-pun">:</span> <span class="c-val">relative</span><span class="c-pun">;</span><br>
+<br>
+&nbsp;&nbsp;<span class="c-cmt">/* offset from its natural position */</span><br>
+&nbsp;&nbsp;<span class="c-prop">top</span><span class="c-pun">:</span>  <span class="c-val">20px</span><span class="c-pun">;</span>  <span class="c-cmt">/* shift ↓ 20px */</span><br>
+&nbsp;&nbsp;<span class="c-prop">left</span><span class="c-pun">:</span> <span class="c-val">40px</span><span class="c-pun">;</span>  <span class="c-cmt">/* shift → 40px */</span><br>
+<span class="c-pun">}</span><br>
+<br>
+<span class="c-cmt">/* Original space stays — siblings don't move */</span>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-head"><h2>Key facts</h2></div>
+        <div class="card-body">
+          <div class="props">
+            <div class="prop-row"><span class="prop-key">Still in flow?</span><span class="prop-val" style="color:#2e7d32;">Yes — ghost space reserved</span></div>
+            <div class="prop-row"><span class="prop-key">Offset from</span><span class="prop-val">Its own natural position</span></div>
+            <div class="prop-row"><span class="prop-key">Creates anchor?</span><span class="prop-val" style="color:#2e7d32;">Yes — for absolute children</span></div>
+            <div class="prop-row"><span class="prop-key">z-index works?</span><span class="prop-val" style="color:#2e7d32;">Yes</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div><!-- /panel-relative -->
+
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- ABSOLUTE                                             -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <div class="panel" id="panel-absolute">
+
+    <section>
+      <div class="card">
+        <div class="card-head">
+          <h2>Live demo</h2>
+          <span class="badge" style="background:var(--abs-bg);color:var(--abs-acc);">
+            <span class="dot" style="background:var(--abs-acc);"></span>position: absolute
+          </span>
+        </div>
+        <div class="card-body" style="padding:14px;">
+          <div class="demo-wrap">
+            <div class="demo-toolbar">
+              <div class="tb-dot"></div><div class="tb-dot"></div><div class="tb-dot"></div>
+              <span class="demo-label">Removed from flow — anchors to parent</span>
+            </div>
+            <div class="demo-viewport">
+              <div class="demo-page">
+                <!-- positioned parent -->
+                <div style="position:relative;border:2px dashed #aaa;border-radius:8px;padding:10px;min-height:180px;background:#f0f1f5;">
+                  <span style="font-size:10px;font-family:var(--mono);color:#aaa;position:absolute;top:6px;left:8px;">parent (position:relative)</span>
+                  <div class="dbox filler" style="height:44px;margin-top:22px;margin-bottom:8px;">Normal child</div>
+                  <div class="dbox filler" style="height:44px;">Normal child (closes gap)</div>
+                  <!-- absolute child -->
+                  <div class="dbox abs-box" style="position:absolute;top:12px;right:12px;width:110px;height:80px;font-size:11px;">
+                    position:<br>absolute<br>
+                    <span style="font-size:10px;opacity:0.7;">top:12 right:12</span>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="tip" style="background:var(--abs-bg);border-color:var(--abs-acc);margin-top:14px;">
+            <span class="tip-icon">🧲</span>
+            <span style="color:var(--abs-acc);">The green box is <strong>removed from the flow</strong> — siblings close the gap as if it doesn't exist. It snaps to the nearest ancestor with <code style="font-family:var(--mono);">position: relative</code>.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><h2>The ancestor chain rule</h2></div>
+        <div class="card-body">
+          <p class="desc" style="margin-bottom:12px;">An absolute element climbs up its ancestors until it finds one that is <strong>not static</strong>. That ancestor becomes the anchor. If none exists, it anchors to the page root.</p>
+          <div style="display:flex;flex-direction:column;gap:6px;font-size:12px;font-family:var(--mono);">
+            <div style="padding:8px 12px;background:#f0f1f5;border-radius:6px;border:1px solid #ddd;">
+              &lt;body&gt; — static, skipped
+            </div>
+            <div style="padding:8px 12px;background:var(--rel-bg);border-radius:6px;border:1px solid var(--rel-light);margin-left:16px;color:var(--rel-acc);">
+              &lt;div style="position:relative"&gt; ← <strong>ANCHOR ✓</strong>
+            </div>
+            <div style="padding:8px 12px;background:var(--abs-bg);border-radius:6px;border:1px solid var(--abs-light);margin-left:32px;color:var(--abs-acc);">
+              &lt;div style="position:absolute"&gt; positions here
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="card">
+        <div class="card-head"><h2>How it works</h2></div>
+        <div class="card-body" style="display:flex;flex-direction:column;gap:14px;">
+          <p class="desc">Absolute removes the element from the document flow completely. <strong>No ghost space is left behind</strong> — siblings collapse to fill the gap.</p>
+          <p class="desc">The element is then placed using <code style="font-family:var(--mono);font-size:12px;">top/right/bottom/left</code> measured from its <strong>nearest positioned ancestor</strong> (any ancestor with a position other than static).</p>
+          <p class="desc">Common uses: tooltips, dropdown menus, badges, overlays, icons positioned within a card.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-head"><h2>CSS code</h2></div>
+        <div class="card-body" style="padding:0;">
+          <div class="code">
+<span class="c-cmt">/* Step 1: give the parent an anchor */</span><br>
+<span class="c-sel">.parent</span> <span class="c-pun">{</span><br>
+&nbsp;&nbsp;<span class="c-prop">position</span><span class="c-pun">:</span> <span class="c-val">relative</span><span class="c-pun">;</span>  <span class="c-cmt">/* ← required anchor */</span><br>
+<span class="c-pun">}</span><br>
+<br>
+<span class="c-cmt">/* Step 2: absolutely place the child */</span><br>
+<span class="c-sel">.badge</span> <span class="c-pun">{</span><br>
+&nbsp;&nbsp;<span class="c-prop">position</span><span class="c-pun">:</span> <span class="c-val">absolute</span><span class="c-pun">;</span><br>
+&nbsp;&nbsp;<span class="c-prop">top</span><span class="c-pun">:</span>   <span class="c-val">8px</span><span class="c-pun">;</span><br>
+&nbsp;&nbsp;<span class="c-prop">right</span><span class="c-pun">:</span> <span class="c-val">8px</span><span class="c-pun">;</span><br>
+<span class="c-pun">}</span><br>
+<br>
+<span class="c-cmt">/* No ghost space — siblings fill the gap */</span>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-head"><h2>Key facts</h2></div>
+        <div class="card-body">
+          <div class="props">
+            <div class="prop-row"><span class="prop-key">Still in flow?</span><span class="prop-val" style="color:#c62828;">No — removed entirely</span></div>
+            <div class="prop-row"><span class="prop-key">Offset from</span><span class="prop-val">Nearest non-static ancestor</span></div>
+            <div class="prop-row"><span class="prop-key">Ghost space?</span><span class="prop-val" style="color:#c62828;">None — siblings close gap</span></div>
+            <div class="prop-row"><span class="prop-key">z-index works?</span><span class="prop-val" style="color:#2e7d32;">Yes</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div><!-- /panel-absolute -->
+
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- FIXED                                                -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <div class="panel" id="panel-fixed">
+
+    <section>
+      <div class="card">
+        <div class="card-head">
+          <h2>Live demo</h2>
+          <span class="badge" style="background:var(--fix-bg);color:var(--fix-acc);">
+            <span class="dot" style="background:var(--fix-acc);"></span>position: fixed
+          </span>
+        </div>
+        <div class="card-body" style="padding:14px;">
+          <div class="demo-wrap">
+            <div class="demo-toolbar">
+              <div class="tb-dot"></div><div class="tb-dot"></div><div class="tb-dot"></div>
+              <span class="demo-label">Scroll ↕ — fixed box doesn't move</span>
+            </div>
+            <div class="demo-viewport" id="fixed-viewport" style="height:240px;position:relative;overflow-y:scroll;">
+              <!-- fixed element — pinned to the viewport div -->
+              <div class="dbox fix-box" style="position:sticky;top:8px;right:8px;width:120px;height:54px;margin-left:auto;z-index:10;font-size:11px;">
+                📌 Fixed<br><span style="font-size:10px;">top:8 · right:8</span>
+              </div>
+              <div style="padding:10px;display:flex;flex-direction:column;gap:10px;margin-top:-54px;">
+                <div class="dbox filler" style="height:50px;">Scrollable content</div>
+                <div class="dbox filler" style="height:50px;">Scrollable content</div>
+                <div class="dbox filler" style="height:50px;">Scrollable content</div>
+                <div class="dbox filler" style="height:50px;">Scrollable content</div>
+                <div class="dbox filler" style="height:50px;">Scrollable content</div>
+                <div class="dbox filler" style="height:50px;">Scrollable content</div>
+              </div>
+            </div>
+          </div>
+          <div class="tip" style="background:var(--fix-bg);border-color:var(--fix-acc);margin-top:14px;">
+            <span class="tip-icon">📌</span>
+            <span style="color:var(--fix-acc);">Fixed locks to the <strong>browser window</strong>, not the page. Scroll all the way down — the orange box never moves.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><h2>Real-world examples</h2></div>
+        <div class="card-body">
+          <div style="display:flex;flex-direction:column;gap:8px;">
+            <div style="display:flex;align-items:center;gap:10px;padding:8px 12px;background:var(--fix-bg);border-radius:7px;">
+              <span>🍔</span><span style="font-size:13px;color:var(--fix-acc);">Top navigation bar (always visible)</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;padding:8px 12px;background:var(--fix-bg);border-radius:7px;">
+              <span>💬</span><span style="font-size:13px;color:var(--fix-acc);">Chat / help button (bottom right corner)</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;padding:8px 12px;background:var(--fix-bg);border-radius:7px;">
+              <span>🍪</span><span style="font-size:13px;color:var(--fix-acc);">Cookie consent bar (bottom of screen)</span>
+            </div>
+            <div style="display:flex;align-items:center;gap:10px;padding:8px 12px;background:var(--fix-bg);border-radius:7px;">
+              <span>⬆️</span><span style="font-size:13px;color:var(--fix-acc);">"Back to top" button</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="card">
+        <div class="card-head"><h2>How it works</h2></div>
+        <div class="card-body" style="display:flex;flex-direction:column;gap:14px;">
+          <p class="desc">Fixed is like absolute but it ignores all ancestors. Its reference point is always the <strong>browser viewport</strong> — the visible rectangle of the window.</p>
+          <p class="desc">No matter how far the user scrolls, a fixed element stays anchored to the same viewport coordinates. It is also <strong>removed from the normal flow</strong>.</p>
+          <p class="desc">⚠️ Beware: if an ancestor has <code style="font-family:var(--mono);font-size:12px;">transform</code>, <code style="font-family:var(--mono);font-size:12px;">filter</code>, or <code style="font-family:var(--mono);font-size:12px;">will-change</code>, it can break fixed positioning — the ancestor becomes a new containing block.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-head"><h2>CSS code</h2></div>
+        <div class="card-body" style="padding:0;">
+          <div class="code">
+<span class="c-sel">.navbar</span> <span class="c-pun">{</span><br>
+&nbsp;&nbsp;<span class="c-prop">position</span><span class="c-pun">:</span> <span class="c-val">fixed</span><span class="c-pun">;</span><br>
+&nbsp;&nbsp;<span class="c-prop">top</span><span class="c-pun">:</span>   <span class="c-val">0</span><span class="c-pun">;</span><br>
+&nbsp;&nbsp;<span class="c-prop">left</span><span class="c-pun">:</span>  <span class="c-val">0</span><span class="c-pun">;</span><br>
+&nbsp;&nbsp;<span class="c-prop">width</span><span class="c-pun">:</span> <span class="c-val">100%</span><span class="c-pun">;</span>  <span class="c-cmt">/* span full width */</span><br>
+&nbsp;&nbsp;<span class="c-prop">z-index</span><span class="c-pun">:</span> <span class="c-val">1000</span><span class="c-pun">;</span> <span class="c-cmt">/* stay on top */</span><br>
+<span class="c-pun">}</span><br>
+<br>
+<span class="c-cmt">/* Compensate for the fixed bar height: */</span><br>
+<span class="c-sel">body</span> <span class="c-pun">{</span><br>
+&nbsp;&nbsp;<span class="c-prop">padding-top</span><span class="c-pun">:</span> <span class="c-val">60px</span><span class="c-pun">;</span><br>
+<span class="c-pun">}</span>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-head"><h2>Key facts</h2></div>
+        <div class="card-body">
+          <div class="props">
+            <div class="prop-row"><span class="prop-key">Still in flow?</span><span class="prop-val" style="color:#c62828;">No — removed</span></div>
+            <div class="prop-row"><span class="prop-key">Offset from</span><span class="prop-val">The browser viewport</span></div>
+            <div class="prop-row"><span class="prop-key">Scrolls with page?</span><span class="prop-val" style="color:#c62828;">Never</span></div>
+            <div class="prop-row"><span class="prop-key">z-index works?</span><span class="prop-val" style="color:#2e7d32;">Yes</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div><!-- /panel-fixed -->
+
+
+  <!-- ══════════════════════════════════════════════════════ -->
+  <!-- STICKY                                               -->
+  <!-- ══════════════════════════════════════════════════════ -->
+  <div class="panel" id="panel-sticky">
+
+    <section>
+      <div class="card">
+        <div class="card-head">
+          <h2>Live demo — scroll inside ↕</h2>
+          <span class="badge" style="background:var(--stk-bg);color:var(--stk-acc);">
+            <span class="dot" style="background:var(--stk-acc);"></span>position: sticky
+          </span>
+        </div>
+        <div class="card-body" style="padding:14px;">
+          <div class="demo-wrap">
+            <div class="demo-toolbar">
+              <div class="tb-dot"></div><div class="tb-dot"></div><div class="tb-dot"></div>
+              <span class="demo-label">Scroll inside — headers stick at top</span>
+            </div>
+            <div class="demo-viewport" style="height:240px;overflow-y:scroll;">
+              <div style="padding:10px;">
+                <!-- Section A -->
+                <div class="dbox stk-box" style="position:sticky;top:0;height:36px;border-radius:6px;font-size:12px;z-index:2;margin-bottom:6px;">
+                  Section A header — sticky
+                </div>
+                <div class="dbox filler" style="height:40px;margin-bottom:6px;">Row A1</div>
+                <div class="dbox filler" style="height:40px;margin-bottom:6px;">Row A2</div>
+                <div class="dbox filler" style="height:40px;margin-bottom:14px;">Row A3</div>
+                <!-- Section B -->
+                <div class="dbox stk-box" style="position:sticky;top:0;height:36px;border-radius:6px;font-size:12px;z-index:2;margin-bottom:6px;">
+                  Section B header — sticky
+                </div>
+                <div class="dbox filler" style="height:40px;margin-bottom:6px;">Row B1</div>
+                <div class="dbox filler" style="height:40px;margin-bottom:6px;">Row B2</div>
+                <div class="dbox filler" style="height:40px;margin-bottom:14px;">Row B3</div>
+                <!-- Section C -->
+                <div class="dbox stk-box" style="position:sticky;top:0;height:36px;border-radius:6px;font-size:12px;z-index:2;margin-bottom:6px;">
+                  Section C header — sticky
+                </div>
+                <div class="dbox filler" style="height:40px;margin-bottom:6px;">Row C1</div>
+                <div class="dbox filler" style="height:40px;margin-bottom:6px;">Row C2</div>
+                <div class="dbox filler" style="height:40px;">Row C3</div>
+              </div>
+            </div>
+          </div>
+          <div class="tip" style="background:var(--stk-bg);border-color:var(--stk-acc);margin-top:14px;">
+            <span class="tip-icon">🗓️</span>
+            <span style="color:var(--stk-acc);">Each header <strong>flows normally</strong> until it reaches the <code style="font-family:var(--mono);">top:0</code> threshold while scrolling — then it locks until its parent section leaves the viewport.</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="card">
+        <div class="card-head"><h2>The two phases</h2></div>
+        <div class="card-body">
+          <div style="display:flex;gap:10px;">
+            <div style="flex:1;padding:12px;background:#f0f1f5;border-radius:8px;border-left:3px solid #bbb;">
+              <div style="font-size:12px;font-weight:600;margin-bottom:6px;color:var(--muted);">Phase 1 — scrolling toward threshold</div>
+              <div style="font-size:12px;color:var(--muted);line-height:1.6;">Behaves exactly like <code style="font-family:var(--mono);">relative</code>. In flow, taking up space, scrolling normally with the page.</div>
+            </div>
+            <div style="flex:1;padding:12px;background:var(--stk-bg);border-radius:8px;border-left:3px solid var(--stk-acc);">
+              <div style="font-size:12px;font-weight:600;margin-bottom:6px;color:var(--stk-acc);">Phase 2 — past the threshold</div>
+              <div style="font-size:12px;color:var(--stk-acc);line-height:1.6;">Behaves like <code style="font-family:var(--mono);">fixed</code>. Locks at the threshold point until its parent container is fully scrolled off.</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <section>
+      <div class="card">
+        <div class="card-head"><h2>How it works</h2></div>
+        <div class="card-body" style="display:flex;flex-direction:column;gap:14px;">
+          <p class="desc">Sticky is a <strong>hybrid of relative and fixed</strong>. It starts in the normal flow and scrolls with the page. Once it hits the threshold you define (e.g. <code style="font-family:var(--mono);font-size:12px;">top: 0</code>), it locks in place — but only within the bounds of its parent container.</p>
+          <p class="desc">When the parent container scrolls off-screen, the sticky element is carried away with it. This is what lets multiple section headers replace each other as you scroll.</p>
+          <p class="desc">⚠️ Common gotcha: the <strong>parent must have a defined height</strong> and cannot have <code style="font-family:var(--mono);font-size:12px;">overflow: hidden</code>, or sticky won't work.</p>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-head"><h2>CSS code</h2></div>
+        <div class="card-body" style="padding:0;">
+          <div class="code">
+<span class="c-cmt">/* Table of contents, section headers, etc. */</span><br>
+<span class="c-sel">.section-header</span> <span class="c-pun">{</span><br>
+&nbsp;&nbsp;<span class="c-prop">position</span><span class="c-pun">:</span> <span class="c-val">sticky</span><span class="c-pun">;</span><br>
+&nbsp;&nbsp;<span class="c-prop">top</span><span class="c-pun">:</span> <span class="c-val">0</span><span class="c-pun">;</span>  <span class="c-cmt">/* stick when it reaches the top */</span><br>
+&nbsp;&nbsp;<span class="c-prop">z-index</span><span class="c-pun">:</span> <span class="c-val">10</span><span class="c-pun">;</span><br>
+<span class="c-pun">}</span><br>
+<br>
+<span class="c-cmt">/* ⚠️ Parent must NOT have overflow:hidden */</span><br>
+<span class="c-sel">.section</span> <span class="c-pun">{</span><br>
+&nbsp;&nbsp;<span class="c-prop">overflow</span><span class="c-pun">:</span> <span class="c-val">visible</span><span class="c-pun">;</span> <span class="c-cmt">/* required */</span><br>
+<span class="c-pun">}</span>
+          </div>
+        </div>
+      </div>
+      <div class="card">
+        <div class="card-head"><h2>Key facts</h2></div>
+        <div class="card-body">
+          <div class="props">
+            <div class="prop-row"><span class="prop-key">Still in flow?</span><span class="prop-val" style="color:#2e7d32;">Yes — takes up space</span></div>
+            <div class="prop-row"><span class="prop-key">Offset from</span><span class="prop-val">Scroll container / viewport</span></div>
+            <div class="prop-row"><span class="prop-key">Scrolls with page?</span><span class="prop-val">Until threshold, then locks</span></div>
+            <div class="prop-row"><span class="prop-key">Boundary</span><span class="prop-val">Limited to parent element</span></div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </div><!-- /panel-sticky -->
+
+</main>
+
+<!-- ── QUICK REFERENCE TABLE ── -->
+<div style="padding:0 40px 48px;max-width:1200px;">
+  <div style="background:#fff;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;">
+    <div style="padding:16px 20px;border-bottom:1px solid var(--border);font-size:13px;font-weight:600;color:var(--muted);text-transform:uppercase;letter-spacing:0.06em;">
+      Quick reference — all five values
+    </div>
+    <div style="overflow-x:auto;">
+      <table style="width:100%;border-collapse:collapse;font-size:13px;">
+        <thead>
+          <tr style="background:#f8f9fc;">
+            <th style="padding:10px 16px;text-align:left;font-weight:600;color:var(--muted);border-bottom:1px solid var(--border);">Value</th>
+            <th style="padding:10px 16px;text-align:left;font-weight:600;color:var(--muted);border-bottom:1px solid var(--border);">In flow?</th>
+            <th style="padding:10px 16px;text-align:left;font-weight:600;color:var(--muted);border-bottom:1px solid var(--border);">Offset from</th>
+            <th style="padding:10px 16px;text-align:left;font-weight:600;color:var(--muted);border-bottom:1px solid var(--border);">Scrolls with page?</th>
+            <th style="padding:10px 16px;text-align:left;font-weight:600;color:var(--muted);border-bottom:1px solid var(--border);">Common use</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td style="padding:10px 16px;border-bottom:1px solid var(--border);"><span class="badge" style="background:var(--static-bg);color:var(--static-acc);font-size:11px;">static</span></td>
+            <td style="padding:10px 16px;border-bottom:1px solid var(--border);color:#2e7d32;">✓ Yes</td>
+            <td style="padding:10px 16px;border-bottom:1px solid var(--border);">—</td>
+            <td style="padding:10px 16px;border-bottom:1px solid var(--border);">Yes</td>
+            <td style="padding:10px 16px;border-bottom:1px solid var(--border);color:var(--muted);">Default for all elements</td>
+          </tr>
+          <tr style="background:#f8f9fc;">
+            <td style="padding:10px 16px;border-bottom:1px solid var(--border);"><span class="badge" style="background:var(--rel-bg);color:var(--rel-acc);font-size:11px;">relative</span></td>
+            <td style="padding:10px 16px;border-bottom:1px solid var(--border);color:#2e7d32;">✓ Yes (ghost stays)</td>
+            <td style="padding:10px 16px;border-bottom:1px solid var(--border);">Its natural position</td>
+            <td style="padding:10px 16px;border-bottom:1px solid var(--border);">Yes</td>
+            <td style="padding:10px 16px;border-bottom:1px solid var(--border);color:var(--muted);">Anchoring absolute children; nudging</td>
+          </tr>
+          <tr>
+            <td style="padding:10px 16px;border-bottom:1px solid var(--border);"><span class="badge" style="background:var(--abs-bg);color:var(--abs-acc);font-size:11px;">absolute</span></td>
+            <td style="padding:10px 16px;border-bottom:1px solid var(--border);color:#c62828;">✗ No</td>
+            <td style="padding:10px 16px;border-bottom:1px solid var(--border);">Nearest non-static ancestor</td>
+            <td style="padding:10px 16px;border-bottom:1px solid var(--border);">Yes (scrolls with page)</td>
+            <td style="padding:10px 16px;border-bottom:1px solid var(--border);color:var(--muted);">Tooltips, badges, dropdowns</td>
+          </tr>
+          <tr style="background:#f8f9fc;">
+            <td style="padding:10px 16px;border-bottom:1px solid var(--border);"><span class="badge" style="background:var(--fix-bg);color:var(--fix-acc);font-size:11px;">fixed</span></td>
+            <td style="padding:10px 16px;border-bottom:1px solid var(--border);color:#c62828;">✗ No</td>
+            <td style="padding:10px 16px;border-bottom:1px solid var(--border);">Viewport (browser window)</td>
+            <td style="padding:10px 16px;border-bottom:1px solid var(--border);color:#c62828;">Never moves</td>
+            <td style="padding:10px 16px;border-bottom:1px solid var(--border);color:var(--muted);">Sticky navbars, chat buttons</td>
+          </tr>
+          <tr>
+            <td style="padding:10px 16px;"><span class="badge" style="background:var(--stk-bg);color:var(--stk-acc);font-size:11px;">sticky</span></td>
+            <td style="padding:10px 16px;color:#2e7d32;">✓ Yes</td>
+            <td style="padding:10px 16px;">Scroll container</td>
+            <td style="padding:10px 16px;">Until threshold, then locks</td>
+            <td style="padding:10px 16px;color:var(--muted);">Table headers, section labels</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Tab switching
+  const tabs = document.querySelectorAll('.tab');
+  const panels = document.querySelectorAll('.panel');
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      const id = tab.dataset.id;
+      tabs.forEach(t => t.classList.remove('active'));
+      panels.forEach(p => p.classList.remove('active'));
+      tab.classList.add('active');
+      document.getElementById('panel-' + id).classList.add('active');
+    });
+  });
+
+  // Relative slider interaction
+  const topSlider  = document.getElementById('top-slider');
+  const leftSlider = document.getElementById('left-slider');
+  const topVal     = document.getElementById('top-val');
+  const leftVal    = document.getElementById('left-val');
+  const relBox     = document.getElementById('rel-demo-box');
+
+  function updateRelBox() {
+    const t = parseInt(topSlider.value);
+    const l = parseInt(leftSlider.value);
+    topVal.textContent  = t + 'px';
+    leftVal.textContent = l + 'px';
+    relBox.style.top  = (20 + t) + 'px';
+    relBox.style.left = (16 + l) + 'px';
+  }
+
+  if (topSlider) {
+    topSlider.addEventListener('input', updateRelBox);
+    leftSlider.addEventListener('input', updateRelBox);
+  }
+</script>
+</body>
+</html>
